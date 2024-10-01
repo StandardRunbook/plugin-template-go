@@ -4,11 +4,10 @@
 // - protoc             v5.28.1
 // source: plugin.proto
 
-package plugin_interface
+package hypothesis
 
 import (
 	context "context"
-	"github.com/StandardRunbook/plugin-interface/shared"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,19 +19,19 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Plugin_Init_FullMethodName        = "/plugin.Plugin/Init"
-	Plugin_Name_FullMethodName        = "/plugin.Plugin/Name"
-	Plugin_Version_FullMethodName     = "/plugin.Plugin/Version"
-	Plugin_Run_FullMethodName         = "/plugin.Plugin/Run"
-	Plugin_ParseOutput_FullMethodName = "/plugin.Plugin/ParseOutput"
+	Hypothesis_Init_FullMethodName        = "/runbook_hypothesis.Hypothesis/Init"
+	Hypothesis_Name_FullMethodName        = "/runbook_hypothesis.Hypothesis/Name"
+	Hypothesis_Version_FullMethodName     = "/runbook_hypothesis.Hypothesis/Version"
+	Hypothesis_Run_FullMethodName         = "/runbook_hypothesis.Hypothesis/Run"
+	Hypothesis_ParseOutput_FullMethodName = "/runbook_hypothesis.Hypothesis/ParseOutput"
 )
 
-// PluginClient is the client API for Plugin service.
+// HypothesisClient is the client API for Hypothesis service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
 // The IPlugin service that represents your interface
-type PluginClient interface {
+type HypothesisClient interface {
 	// Initializes the plugin
 	Init(ctx context.Context, in *Config, opts ...grpc.CallOption) (*InitResponse, error)
 	// Retrieves the name of the plugin
@@ -45,70 +44,70 @@ type PluginClient interface {
 	ParseOutput(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ParseOutputResponse, error)
 }
 
-type pluginClient struct {
+type hypothesisClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewPluginClient(cc grpc.ClientConnInterface) PluginClient {
-	return &pluginClient{cc}
+func NewHypothesisClient(cc grpc.ClientConnInterface) HypothesisClient {
+	return &hypothesisClient{cc}
 }
 
-func (c *pluginClient) Init(ctx context.Context, in *Config, opts ...grpc.CallOption) (*InitResponse, error) {
+func (c *hypothesisClient) Init(ctx context.Context, in *Config, opts ...grpc.CallOption) (*InitResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InitResponse)
-	err := c.cc.Invoke(ctx, Plugin_Init_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Hypothesis_Init_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *pluginClient) Name(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*NameResponse, error) {
+func (c *hypothesisClient) Name(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*NameResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(NameResponse)
-	err := c.cc.Invoke(ctx, Plugin_Name_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Hypothesis_Name_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *pluginClient) Version(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*VersionResponse, error) {
+func (c *hypothesisClient) Version(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*VersionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(VersionResponse)
-	err := c.cc.Invoke(ctx, Plugin_Version_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Hypothesis_Version_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *pluginClient) Run(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*RunResponse, error) {
+func (c *hypothesisClient) Run(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*RunResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RunResponse)
-	err := c.cc.Invoke(ctx, Plugin_Run_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Hypothesis_Run_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *pluginClient) ParseOutput(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ParseOutputResponse, error) {
+func (c *hypothesisClient) ParseOutput(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ParseOutputResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ParseOutputResponse)
-	err := c.cc.Invoke(ctx, Plugin_ParseOutput_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Hypothesis_ParseOutput_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// PluginServer is the server API for Plugin service.
-// All implementations must embed UnimplementedPluginServer
+// HypothesisServer is the server API for Hypothesis service.
+// All implementations must embed UnimplementedHypothesisServer
 // for forward compatibility.
 //
 // The IPlugin service that represents your interface
-type PluginServer interface {
+type HypothesisServer interface {
 	// Initializes the plugin
 	Init(context.Context, *Config) (*InitResponse, error)
 	// Retrieves the name of the plugin
@@ -119,168 +118,168 @@ type PluginServer interface {
 	Run(context.Context, *Empty) (*RunResponse, error)
 	// Parses the output of the plugin
 	ParseOutput(context.Context, *Empty) (*ParseOutputResponse, error)
-	mustEmbedUnimplementedPluginServer()
+	mustEmbedUnimplementedHypothesisServer()
 }
 
-// UnimplementedPluginServer must be embedded to have
+// UnimplementedHypothesisServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedPluginServer struct{}
+type UnimplementedHypothesisServer struct{}
 
-func (UnimplementedPluginServer) Init(context.Context, *Config) (*InitResponse, error) {
+func (UnimplementedHypothesisServer) Init(context.Context, *Config) (*InitResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Init not implemented")
 }
-func (UnimplementedPluginServer) Name(context.Context, *Empty) (*NameResponse, error) {
+func (UnimplementedHypothesisServer) Name(context.Context, *Empty) (*NameResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Name not implemented")
 }
-func (UnimplementedPluginServer) Version(context.Context, *Empty) (*VersionResponse, error) {
+func (UnimplementedHypothesisServer) Version(context.Context, *Empty) (*VersionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Version not implemented")
 }
-func (UnimplementedPluginServer) Run(context.Context, *Empty) (*RunResponse, error) {
+func (UnimplementedHypothesisServer) Run(context.Context, *Empty) (*RunResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Run not implemented")
 }
-func (UnimplementedPluginServer) ParseOutput(context.Context, *Empty) (*ParseOutputResponse, error) {
+func (UnimplementedHypothesisServer) ParseOutput(context.Context, *Empty) (*ParseOutputResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ParseOutput not implemented")
 }
-func (UnimplementedPluginServer) mustEmbedUnimplementedPluginServer() {}
-func (UnimplementedPluginServer) testEmbeddedByValue()                {}
+func (UnimplementedHypothesisServer) mustEmbedUnimplementedHypothesisServer() {}
+func (UnimplementedHypothesisServer) testEmbeddedByValue()                    {}
 
-// UnsafePluginServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to PluginServer will
+// UnsafeHypothesisServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to HypothesisServer will
 // result in compilation errors.
-type UnsafePluginServer interface {
-	mustEmbedUnimplementedPluginServer()
+type UnsafeHypothesisServer interface {
+	mustEmbedUnimplementedHypothesisServer()
 }
 
-func RegisterPluginServer(s grpc.ServiceRegistrar, srv *shared.GRPCServer) {
-	// If the following call pancis, it indicates UnimplementedPluginServer was
+func RegisterHypothesisServer(s grpc.ServiceRegistrar, srv HypothesisServer) {
+	// If the following call pancis, it indicates UnimplementedHypothesisServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Plugin_ServiceDesc, srv)
+	s.RegisterService(&Hypothesis_ServiceDesc, srv)
 }
 
-func _Plugin_Init_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Hypothesis_Init_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Config)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PluginServer).Init(ctx, in)
+		return srv.(HypothesisServer).Init(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Plugin_Init_FullMethodName,
+		FullMethod: Hypothesis_Init_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PluginServer).Init(ctx, req.(*Config))
+		return srv.(HypothesisServer).Init(ctx, req.(*Config))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Plugin_Name_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Hypothesis_Name_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PluginServer).Name(ctx, in)
+		return srv.(HypothesisServer).Name(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Plugin_Name_FullMethodName,
+		FullMethod: Hypothesis_Name_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PluginServer).Name(ctx, req.(*Empty))
+		return srv.(HypothesisServer).Name(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Plugin_Version_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Hypothesis_Version_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PluginServer).Version(ctx, in)
+		return srv.(HypothesisServer).Version(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Plugin_Version_FullMethodName,
+		FullMethod: Hypothesis_Version_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PluginServer).Version(ctx, req.(*Empty))
+		return srv.(HypothesisServer).Version(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Plugin_Run_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Hypothesis_Run_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PluginServer).Run(ctx, in)
+		return srv.(HypothesisServer).Run(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Plugin_Run_FullMethodName,
+		FullMethod: Hypothesis_Run_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PluginServer).Run(ctx, req.(*Empty))
+		return srv.(HypothesisServer).Run(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Plugin_ParseOutput_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Hypothesis_ParseOutput_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PluginServer).ParseOutput(ctx, in)
+		return srv.(HypothesisServer).ParseOutput(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Plugin_ParseOutput_FullMethodName,
+		FullMethod: Hypothesis_ParseOutput_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PluginServer).ParseOutput(ctx, req.(*Empty))
+		return srv.(HypothesisServer).ParseOutput(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Plugin_ServiceDesc is the grpc.ServiceDesc for Plugin service.
+// Hypothesis_ServiceDesc is the grpc.ServiceDesc for Hypothesis service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Plugin_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "plugin.Plugin",
-	HandlerType: (*PluginServer)(nil),
+var Hypothesis_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "runbook_hypothesis.Hypothesis",
+	HandlerType: (*HypothesisServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Init",
-			Handler:    _Plugin_Init_Handler,
+			Handler:    _Hypothesis_Init_Handler,
 		},
 		{
 			MethodName: "Name",
-			Handler:    _Plugin_Name_Handler,
+			Handler:    _Hypothesis_Name_Handler,
 		},
 		{
 			MethodName: "Version",
-			Handler:    _Plugin_Version_Handler,
+			Handler:    _Hypothesis_Version_Handler,
 		},
 		{
 			MethodName: "Run",
-			Handler:    _Plugin_Run_Handler,
+			Handler:    _Hypothesis_Run_Handler,
 		},
 		{
 			MethodName: "ParseOutput",
-			Handler:    _Plugin_ParseOutput_Handler,
+			Handler:    _Hypothesis_ParseOutput_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

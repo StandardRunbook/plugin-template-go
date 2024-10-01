@@ -8,9 +8,9 @@ import (
 
 func TestTemplate_Init(t *testing.T) {
 	cfg := map[string]string{
-		"Name":    "TestPlugin",
-		"Version": "1.0.0",
-		"Hobbies": "running, swimming, biking",
+		"Name":      "TestPlugin",
+		"Version":   "1.0.0",
+		"Arguments": "running, swimming, biking",
 	}
 	tmpl := &Template{}
 	err := tmpl.Init(cfg)
@@ -52,8 +52,7 @@ func TestTemplate_Run(t *testing.T) {
 	}
 
 	// Create a mock script
-	scriptContent := []byte("#!/bin/bash\necho 'Hello, World!'")
-	runScript = scriptContent
+	runScript = []byte("#!/bin/bash\necho 'Hello, World!'")
 
 	err := tmpl.Run()
 	require.Nil(t, err, "expected no error running script")

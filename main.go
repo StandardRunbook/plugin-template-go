@@ -10,7 +10,7 @@ func main() {
 	plugin.Serve(&plugin.ServeConfig{
 		HandshakeConfig: pluginInterface.Handshake,
 		Plugins: map[string]plugin.Plugin{
-			"kv": &pluginInterface.GRPCPlugin{Impl: &script.Template{}},
+			"kv": &pluginInterface.GRPCPlugin{Impl: script.NewPluginTemplate()},
 		},
 
 		// A non-nil value here enables gRPC serving for this script...

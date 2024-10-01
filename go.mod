@@ -3,7 +3,7 @@ module github.com/StandardRunbook/plugin-template-go
 go 1.22.2
 
 require (
-	github.com/StandardRunbook/plugin-interface v1.0.6
+	github.com/StandardRunbook/plugin-interface v1.0.7
 	github.com/hashicorp/go-plugin v1.6.1
 	github.com/stretchr/testify v1.9.0
 )
@@ -11,7 +11,7 @@ require (
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fatih/color v1.7.0 // indirect
-	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/hashicorp/go-hclog v0.14.1 // indirect
 	github.com/hashicorp/yamux v0.1.1 // indirect
 	github.com/mattn/go-colorable v0.1.4 // indirect

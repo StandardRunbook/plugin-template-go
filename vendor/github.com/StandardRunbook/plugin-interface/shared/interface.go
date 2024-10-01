@@ -6,7 +6,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/StandardRunbook/plugin-interface/plugin-interface/github.com/StandardRunbook/plugin-interface"
+	proto "github.com/StandardRunbook/plugin-interface/hypothesis-interface/github.com/StandardRunbook/hypothesis"
 	"github.com/hashicorp/go-plugin"
 )
 
@@ -40,10 +40,10 @@ type GRPCPlugin struct {
 }
 
 func (p *GRPCPlugin) GRPCServer(broker *plugin.GRPCBroker, s *grpc.Server) error {
-	plugin_interface.RegisterPluginServer(s, &GRPCServer{Impl: p.Impl})
+	proto.RegisterHypothesisServer(s, &GRPCServer{Impl: p.Impl})
 	return nil
 }
 
 func (p *GRPCPlugin) GRPCClient(ctx context.Context, broker *plugin.GRPCBroker, c *grpc.ClientConn) (interface{}, error) {
-	return &GRPCClient{client: plugin_interface.NewPluginClient(c)}, nil
+	return &GRPCClient{client: proto.NewHypothesisClient(c)}, nil
 }

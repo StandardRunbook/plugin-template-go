@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	plugininterface "github.com/StandardRunbook/plugin-interface/plugin-interface/github.com/StandardRunbook/plugin-interface"
+	plugininterface "github.com/StandardRunbook/plugin-interface/hypothesis-interface/github.com/StandardRunbook/hypothesis"
 )
 
 const (
@@ -14,7 +14,7 @@ const (
 )
 
 type GRPCClient struct {
-	client plugininterface.PluginClient
+	client plugininterface.HypothesisClient
 }
 
 func (g *GRPCClient) Init(m map[string]string) error {

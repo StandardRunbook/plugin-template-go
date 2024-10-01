@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"reflect"
-	"strconv"
 	"strings"
 
 	pluginInterface "github.com/StandardRunbook/plugin-interface/shared"
@@ -17,49 +15,18 @@ var runScript []byte
 
 // Template is a placeholder - please change to be unique to your script name
 type Template struct {
-	name           string
-	version        string
-	arguments      []string
-	output         string
-	expectedOutput string
-}
-
-func mapToStruct(m map[string]string, result interface{}) error {
-	val := reflect.ValueOf(result).Elem()
-	for key, value := range m {
-		field := val.FieldByName(key)
-		if !field.IsValid() || !field.CanSet() {
-			return fmt.Errorf("cannot set field %s", key)
-		}
-		switch field.Kind() {
-		case reflect.String:
-			field.SetString(value)
-		case reflect.Int:
-			intVal, err := strconv.Atoi(value)
-			if err != nil {
-				return err
-			}
-			field.SetInt(int64(intVal))
-		case reflect.Slice:
-			// Check if the slice element type is string; TODO: support more slices
-			if field.Type().Elem().Kind() != reflect.String {
-				return fmt.Errorf("%s is not a string slice", key)
-			}
-			sliceVal := strings.Split(value, ",")
-			for i, s := range sliceVal {
-				sliceVal[i] = strings.TrimSpace(s)
-			}
-			field.Set(reflect.ValueOf(sliceVal))
-		default:
-			return fmt.Errorf("unsupported type: %s", field.Kind())
-		}
-	}
-	return nil
+	name           string   `yaml:"Name"`
+	version        string   `yaml:"Version"`
+	arguments      []string `yaml:"Arguments"`
+	output         string   `yaml:"Output"`
+	expectedOutput string   `yaml:"ExpectedOutput"`
 }
 
 func (t *Template) Init(cfg map[string]string) error {
-	var myTemplate Template
-	return mapToStruct(cfg, &myTemplate)
+	t.name = cfg["Name"]
+	t.version = cfg["Version"]
+	t.arguments = strings.Split(cfg["Arguments"], ",")
+	return nil
 }
 
 func (t *Template) Name() (string, error) {

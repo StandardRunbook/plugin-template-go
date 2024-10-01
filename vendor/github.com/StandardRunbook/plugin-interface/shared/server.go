@@ -2,10 +2,12 @@ package shared
 
 import (
 	"context"
-	plugininterface "github.com/StandardRunbook/plugin-interface/plugin-interface/github.com/StandardRunbook/plugin-interface"
+
+	plugininterface "github.com/StandardRunbook/plugin-interface/hypothesis-interface/github.com/StandardRunbook/hypothesis"
 )
 
 type GRPCServer struct {
+	plugininterface.UnimplementedHypothesisServer
 	Impl IPlugin
 	cfg  map[string]string
 }
